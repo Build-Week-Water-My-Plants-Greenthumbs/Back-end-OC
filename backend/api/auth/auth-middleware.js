@@ -1,8 +1,8 @@
 const Users = require('../users/users-model');
 
-function checkForUsernameAndPassword(req, res, next) {
-  const { username, password, phoneNumber } = req.body;
-  if (!username || !password || !phoneNumber) {
+function checkCredentials(req, res, next) {
+  const { username, password } = req.body;
+  if (!username || !password) {
     res.json({
       status: 401,
       message: 'username, password, and phone number are required',
@@ -13,7 +13,7 @@ function checkForUsernameAndPassword(req, res, next) {
 }
 // For Registration: Free Username ; No duplicate usernames
 
-async function checkCredentials(req, res, next) {
+async function checkUsernameFree(req, res, next) {
   const username = { username: req.body.username };
   await Users.findBy(username)
     .then((user) => {
@@ -29,6 +29,6 @@ async function checkCredentials(req, res, next) {
 }
 
 module.exports = {
-  checkForUsernameAndPassword,
+  checkUsernameFree,
   checkCredentials,
 };
