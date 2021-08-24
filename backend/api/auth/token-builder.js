@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { jwtSecret } = process.env.SECRET || 'undefined';
+const jwtSecret = 'tbd';
 
 module.exports = function (user) {
   const payload = {

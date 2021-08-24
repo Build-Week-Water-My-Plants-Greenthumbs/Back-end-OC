@@ -7,6 +7,10 @@ const {
 } = require('../auth/auth-middleware');
 const tokenBuilder = require('../auth/token-builder');
 
+router.get('/wateroc', (req, res, next) => {
+  res.json({ message: 'Get is up', status: 200 });
+});
+
 router.post(
   '/register',
   checkCredentials,
@@ -15,19 +19,21 @@ router.post(
     const { username, password } = req.body;
     const passwordHash = bcrypt.hashSync(password, 7);
     Users.add({ username, password: passwordHash })
-      .then((user) => res.json({ status: 201, message: user }))
+      .then((user) =>
+        res.json({ status: 201, message: 'Successful user creation!' })
+      )
       .catch(next);
   }
 );
 
-router.post('/login', checkCredentials, (req, res, next) => {
+router.post('/login', (req, res, next) => {
   let { username, password } = req.body;
   Users.findBy({ username })
     .then(([user]) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = tokenBuilder(user);
         res.status(200).json({
-          message: `welcome, ${user.username}`,
+          message: `Welcome, ${user.username}`,
           token,
         });
       } else {

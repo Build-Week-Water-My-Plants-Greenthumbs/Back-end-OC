@@ -5,7 +5,7 @@ function checkCredentials(req, res, next) {
   if (!username || !password) {
     res.json({
       status: 401,
-      message: 'username, password, and phone number are required',
+      message: 'username and password are required',
     });
   } else {
     next();
