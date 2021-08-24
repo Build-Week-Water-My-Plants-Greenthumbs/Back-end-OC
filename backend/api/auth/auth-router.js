@@ -7,8 +7,16 @@ const {
 } = require('../auth/auth-middleware');
 const tokenBuilder = require('../auth/token-builder');
 
-router.get('/wateroc', (req, res, next) => {
-  res.json({ message: 'Get is up', status: 200 });
+router.get('/waterUsers', (req, res, next) => {
+  Users.getUsers().then((users) => {
+    const activeUsers = users.map((user) => {
+      return user.username;
+    });
+    res.json({
+      message: `Get is up! Here are all of the registered users: ${activeUsers}`,
+      status: 200,
+    });
+  });
 });
 
 router.post(
@@ -16,9 +24,9 @@ router.post(
   checkCredentials,
   checkUsernameFree,
   (req, res, next) => {
-    const { username, password } = req.body;
+    const { username, password, phoneNumber } = req.body;
     const passwordHash = bcrypt.hashSync(password, 7);
-    Users.add({ username, password: passwordHash })
+    Users.add({ username, password: passwordHash, phoneNumber })
       .then((user) =>
         res.json({ status: 201, message: 'Successful user creation!' })
       )
