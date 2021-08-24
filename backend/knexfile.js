@@ -19,4 +19,5 @@ module.exports = {
     ...sharedConfig,
     connection: { filename: './data/test.db3' },
   },
+  //Switch to Postgres/Production Environment
 };
