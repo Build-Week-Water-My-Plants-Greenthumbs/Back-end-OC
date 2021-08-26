@@ -41,7 +41,7 @@ router.post('/login', (req, res, next) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = tokenBuilder(user);
         res.status(200).json({
-          message: `Welcome, ${user.username}`,
+          message: `Welcome ${user.username}! Let's start watering plants!`,
           token,
         });
       } else {
@@ -56,8 +56,14 @@ router.delete('/delete/:id', (req, res, next) => {
   const id = req.params.id;
   Users.deleteUser(id)
     .then((deletedUser) => {
+      if (!deletedUser.length) {
+        return res.json({
+          status: 400,
+          message: 'User could not be deleted. Check user ID',
+        });
+      }
       res.json({
-        message: `User: ${deletedUser.username} successfully deleted`,
+        message: `User: ${deletedUser} successfully deleted`,
         status: 200,
       });
     })
