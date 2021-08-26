@@ -13,14 +13,18 @@ module.exports = {
   development: {
     ...sharedConfig,
     connection: { filename: './data/water-my-plants.db3' },
-    seeds: { directory: './data/seeds' },
   },
   testing: {
     ...sharedConfig,
     connection: { filename: './data/test.db3' },
   },
   production: {
-    ...sharedConfig,
-    connection: { filename: './data/test.db3' },
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
+    migrations: { directory: './data/migrations' },
+    pool: {
+      afterCreate: (conn, done) => conn.run('PRAGMA foreign_keys = ON', done),
+    },
   },
 };
