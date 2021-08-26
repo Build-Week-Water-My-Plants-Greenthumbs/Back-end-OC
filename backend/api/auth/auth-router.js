@@ -51,4 +51,17 @@ router.post('/login', (req, res, next) => {
     .catch(next);
 });
 
+// To delete a user
+router.delete('/delete/:id', (req, res, next) => {
+  const id = req.params.id;
+  Users.deleteUser(id)
+    .then((deletedUser) => {
+      res.json({
+        message: `User: ${deletedUser.username} successfully deleted`,
+        status: 200,
+      });
+    })
+    .catch(next);
+});
+
 module.exports = router;
