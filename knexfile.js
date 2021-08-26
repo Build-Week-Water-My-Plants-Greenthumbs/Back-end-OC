@@ -1,4 +1,5 @@
 // Update with your config settings.
+const pg = require('pg');
 
 const sharedConfig = {
   client: 'sqlite3',
@@ -8,6 +9,10 @@ const sharedConfig = {
     afterCreate: (conn, done) => conn.run('PRAGMA foreign_keys = ON', done),
   },
 };
+
+if (process.env.DATABASE_URL) {
+  pg.defaults.ssl = { rejectUnauthorized: false };
+}
 
 module.exports = {
   development: {
@@ -22,7 +27,6 @@ module.exports = {
     client: 'pg',
     connection: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
-    migrations: { directory: './data/migrations' },
     pool: {
       afterCreate: (conn, done) => conn.run('PRAGMA foreign_keys = ON', done),
     },
