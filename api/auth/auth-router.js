@@ -7,6 +7,9 @@ const {
 } = require('../auth/auth-middleware');
 const tokenBuilder = require('../auth/token-builder');
 
+router.get('/', (req, res, next) => {
+  res.json({ message: 'server up', status: 200 });
+});
 router.get('/waterUsers', (req, res, next) => {
   Users.getUsers().then((users) => {
     const activeUsers = users.map((user) => {
