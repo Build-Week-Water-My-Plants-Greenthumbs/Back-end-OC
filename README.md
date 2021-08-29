@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# API Documentation for Water My Plants
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Please follow this link to check if the API is running: [Heroku API Link](https://build-water-plants.herokuapp.com/api/).
+If this page is not up, then the API is temporarily down. Please notify me if you receive an error page. 
 
-## Available Scripts
+## Object Shapes
+### Registration
 
-In the project directory, you can run:
+### Plant Creation 
+  - `nickname` - required
+  - `species` - required
+  - `water_schedule` - required
+  - `image` - optional
+**Note: You do not have to submit a plant id. This is automatically created by the database**
 
-### `npm start`
+## Available Endpoints
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Default URL: https://build-water-plants.herokuapp.com/api/
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Login/Registration
 
-### `npm test`
+`[POST] /api/register`
+  - This endpoint allows registration of new users. 
+  - Each registration must include `username`, `phoneNumber`, and `password`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ `[GET] /api/login`
+  - This endpoint should be used to login. 
+  - Each login attempt must include `username` and `password`.
 
-### `npm run build`
+### Plant CRUD Operations
+**Note: You must be logged in to execute the following operations. Each endpoint checks for a `token` before allowing access.**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`[GET] /api/plants`
+- This returns a list of created plants. For example: `{"plant_id":number,"nickname":"foo","species":bar,"water_schedule":string,"image":null}`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`[POST] /api/createPlant`
+  - This endpoint adds a new plant to track. Once created, you will receive a confirmation with the submitted plant information.  
+  - A `plant_id` is automatically created. You must include: `nickname`, `species`, and `water_schedule`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`[POST] /api/updatePlant/:id`
+  - This endpoint updates the value of the specified plant using the provided `id`. This correlates to the created `plant_id`.
+  
+`[DELETE] /api/deletePlant/:id`
+  - This endpoint will delete the specified plant using the provided `id`. This correlates to the created `plant_id`.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

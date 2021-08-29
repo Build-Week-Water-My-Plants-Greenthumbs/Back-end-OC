@@ -1,16 +1,5 @@
 const Users = require('../users/users-model');
 
-function checkForToken(req, res, next) {
-  const { token } = req.body;
-  if (token.length) {
-    next();
-  } else {
-    res.json({
-      message: 'You must be logged in to access this page',
-      status: 401,
-    });
-  }
-}
 function checkCredentials(req, res, next) {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -42,5 +31,4 @@ async function checkUsernameFree(req, res, next) {
 module.exports = {
   checkUsernameFree,
   checkCredentials,
-  checkForToken,
 };
