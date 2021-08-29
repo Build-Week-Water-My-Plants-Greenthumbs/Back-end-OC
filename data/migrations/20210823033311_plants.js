@@ -4,7 +4,7 @@ exports.up = function (knex) {
     tbl.string('nickname', 128).unique().notNullable();
     tbl.string('species', 10).unique().notNullable();
     tbl.string('water_schedule', 255).notNullable();
-    tbl.string('image').nullable();
+    tbl.string('image');
   });
 };
 

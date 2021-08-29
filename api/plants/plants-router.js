@@ -3,7 +3,7 @@ const Plants = require('../plants/plants-model');
 const { checkIfEmpty, checkForToken } = require('./plants-middleware');
 
 // returns your list of plants
-router.get('/plantsList', (req, res, next) => {
+router.get('/plants', (req, res, next) => {
   Plants.getPlants()
     .then((plants) => {
       if (!plants.length) {
@@ -21,7 +21,7 @@ router.post('/createPlant', checkForToken, checkIfEmpty, (req, res, next) => {
   Plants.addPlant(req.body)
     .then((plant) => {
       res.json({
-        message: `Congrats on adding your new Plant! Plant species:${plant.species}`,
+        message: `Congrats on adding your new Plant! Submitted plant info: ${plant}`,
         status: 201,
       });
     })
@@ -33,19 +33,27 @@ router.post('/createPlant', checkForToken, checkIfEmpty, (req, res, next) => {
     });
 });
 // updates the fields for your created plant
-router.put('/updatePlant', checkForToken, checkIfEmpty, (req, res, next) => {
-  const id = req.params.id;
-  Plants.updatePlant(id, req.body)
-    .then((updatedPlant) => {
-      res.json({ message: 'Congrats on updating your plant!', status: 200 });
-    })
-    .catch((err) => {
-      res.json({
-        message: 'Could not update your plant. Try again!',
-        status: 401,
+router.put(
+  '/updatePlant/:id',
+  checkForToken,
+  checkIfEmpty,
+  (req, res, next) => {
+    const id = req.params.id;
+    Plants.updatePlant(id, req.body)
+      .then((updatedPlant) => {
+        res.json({
+          message: `Congrats on updating your plant! Updated plant info: ${updatedPlant}`,
+          status: 200,
+        });
+      })
+      .catch((err) => {
+        res.json({
+          message: 'Could not update your plant. Try again!',
+          status: 401,
+        });
       });
-    });
-});
+  }
+);
 // deletes the created plant based upon id
 router.delete(
   '/deletePlant/:id',

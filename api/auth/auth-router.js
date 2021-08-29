@@ -32,7 +32,7 @@ router.post(
     const passwordHash = bcrypt.hashSync(password, 7);
     Users.add({ username, password: passwordHash, phoneNumber })
       .then((user) =>
-        res.json({ status: 201, message: 'Successful user creation!' })
+        res.json({ status: 201, message: `Success! User:${username} created!` })
       )
       .catch(next);
   }
