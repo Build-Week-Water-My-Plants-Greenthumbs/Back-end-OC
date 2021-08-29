@@ -4,20 +4,20 @@ const Users = require('../users/users-model');
 const {
   checkUsernameFree,
   checkCredentials,
-  checkForToken,
 } = require('../auth/auth-middleware');
 const tokenBuilder = require('../auth/token-builder');
 
-router.get('/', checkForToken, (req, res, next) => {
+router.get('/', (req, res, next) => {
   res.json({ message: 'server up', status: 200 });
 });
+
 router.get('/waterUsers', (req, res, next) => {
   Users.getUsers().then((users) => {
     const activeUsers = users.map((user) => {
       return user.username;
     });
     res.json({
-      message: `Get is up! Here are all of the registered users: ${activeUsers}`,
+      message: `Here are all of the registered users: ${activeUsers}`,
       status: 200,
     });
   });
