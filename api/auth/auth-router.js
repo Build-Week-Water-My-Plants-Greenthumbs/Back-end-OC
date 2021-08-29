@@ -4,11 +4,11 @@ const Users = require('../users/users-model');
 const {
   checkUsernameFree,
   checkCredentials,
-  checkforToken,
+  checkForToken,
 } = require('../auth/auth-middleware');
 const tokenBuilder = require('../auth/token-builder');
 
-router.get('/', checkforToken, (req, res, next) => {
+router.get('/', checkForToken, (req, res, next) => {
   res.json({ message: 'server up', status: 200 });
 });
 router.get('/waterUsers', (req, res, next) => {
